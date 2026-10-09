@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Persegi Panjang Premium</title>
+    <style>
+        :root {
+            --bg-1: #f4f7ff;
+            --bg-2: #edf2ff;
+            --panel: rgba(255, 255, 255, 0.8);
+            --panel-strong: rgba(255, 255, 255, 0.96);
+            --line: rgba(99, 102, 241, 0.14);
+            --text: #1f2937;
+            --muted: #5b6475;
+            --primary: #6d5ef6;
+            --primary-2: #4f46e5;
+            --primary-3: #14b8a6;
+            --success: #16a34a;
+            --card: rgba(255, 255, 255, 0.8);
+            --shadow: rgba(79, 70, 229, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            margin: 0;
+            min-height: 100%;
+            font-family: Arial, sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(109, 94, 246, 0.15), transparent 28%),
+                radial-gradient(circle at bottom right, rgba(20, 184, 166, 0.12), transparent 25%),
+                linear-gradient(135deg, var(--bg-1), var(--bg-2));
+            color: var(--text);
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 32px 18px;
+        }
+
+        .app-shell {
+            width: min(1100px, 100%);
+            display: grid;
+            grid-template-columns: 1.05fr 1.25fr;
+            gap: 28px;
+            padding: 18px;
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.58);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 30px 70px rgba(79, 70, 229, 0.12);
+        }
+
+        .panel {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 255, 0.9));
+            border: 1px solid var(--line);
+            border-radius: 26px;
+            padding: 26px 22px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 7px 12px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, rgba(109, 94, 246, 0.12), rgba(20, 184, 166, 0.1));
+            color: var(--primary-2);
+            border: 1px solid rgba(109, 94, 246, 0.2);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            font-weight: 700;
+        }
+
+        h1 {
+            margin: 18px 0 24px;
+            font-size: clamp(2rem, 3vw, 3rem);
+            line-height: 1.05;
+            letter-spacing: -0.04em;
+            color: #111827;
+        }
+
+        .input-group {
+            display: grid;
+            gap: 18px;
+        }
+
+        .field {
+            display: grid;
+            gap: 8px;
+        }
+
+        label {
+            color: var(--muted);
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+        }
+
+        input,
+        select {
+            width: 100%;
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            background: rgba(255, 255, 255, 0.8);
+            color: var(--text);
+            border-radius: 14px;
+            padding: 14px 16px;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: rgba(109, 94, 246, 0.8);
+            box-shadow: 0 0 0 4px rgba(109, 94, 246, 0.1);
+            background: #fff;
+        }
+
+        .button-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        button {
+            flex: 1;
+            border: none;
+            border-radius: 14px;
+            padding: 14px 18px;
+            font-weight: 800;
+            font-size: 0.98rem;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+        }
+
+        .primary-btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-2));
+            color: white;
+            box-shadow: 0 12px 30px rgba(79, 70, 229, 0.25);
+        }
+
+        .secondary-btn {
+            background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+            color: #1f2937;
+            border: 1px solid rgba(148, 163, 184, 0.3);
+        }
+
+        .stats {
+            margin-top: 22px;
+            display: grid;
+            gap: 12px;
+        }
+
+        .stat-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 16px;
+            border-radius: 16px;
+            background: rgba(248, 250, 255, 0.9);
+            border: 1px solid rgba(148, 163, 184, 0.18);
+        }
+
+        .stat-card .label {
+            color: var(--muted);
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        .stat-card .value {
+            color: var(--text);
+            font-size: 1.2rem;
+            font-weight: 800;
+        }
+
+        .visual-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .visual-box {
+            background: linear-gradient(180deg, rgba(248, 250, 255, 0.98), rgba(237, 242, 255, 0.9));
+            border: 1px solid var(--line);
+            border-radius: 24px;
+            padding: 18px;
+            overflow: hidden;
+        }
+
+        .visual-box h2 {
+            margin: 0 0 16px;
+            color: var(--muted);
+            font-size: 1rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        svg {
+            display: block;
+            width: 100%;
+            height: auto;
+            background: linear-gradient(180deg, #ffffff, #f8fafc);
+            border-radius: 18px;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .shape {
+            fill: rgba(109, 94, 246, 0.82);
+            stroke: rgba(79, 70, 229, 0.9);
+            stroke-width: 3;
+            filter: drop-shadow(0 10px 22px rgba(109, 94, 246, 0.22));
+        }
+
+        .grid-line {
+            stroke: rgba(148, 163, 184, 0.18);
+            stroke-width: 1;
+        }
+
+        .dimension-line {
+            stroke: rgba(30, 41, 59, 0.8);
+            stroke-width: 2;
+            stroke-dasharray: 7 7;
+        }
+
+        .dimension-text {
+            font-size: 13px;
+            fill: #1f2937;
+            font-weight: 700;
+        }
+
+        .result-box {
+            background: linear-gradient(180deg, rgba(248, 250, 255, 0.95), rgba(237, 242, 255, 0.9));
+            border: 1px solid var(--line);
+            border-radius: 24px;
+            padding: 18px;
+            display: grid;
+            gap: 12px;
+        }
+
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            padding: 12px 14px;
+        }
+
+        .result-row .label {
+            color: var(--muted);
+            font-weight: 700;
+        }
+
+        .value {
+            font-weight: 800;
+            color: #111827;
+            font-size: 1.08rem;
+        }
+
+        .unit-tag {
+            font-size: 0.75rem;
+            color: var(--muted);
+            margin-left: 4px;
+        }
+
+        @media (max-width: 820px) {
+            .app-shell {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-shell">
+        <div class="panel">
+            <div class="badge">Advanced Calculator</div>
+            <h1>Luas & Keliling<br>Persegi Panjang</h1>
+
+            <div class="input-group">
+                <div class="field">
+                    <label for="panjang">Panjang</label>
+                    <input id="panjang" type="number" value="10" min="0" step="any" aria-label="Panjang">
+                </div>
+
+                <div class="field">
+                    <label for="lebar">Lebar</label>
+                    <input id="lebar" type="number" value="5" min="0" step="any" aria-label="Lebar">
+                </div>
+
+                <div class="field">
+                    <label for="satuan">Satuan</label>
+                    <select id="satuan" aria-label="Satuan">
+                        <option value="m">Meter (m)</option>
+                        <option value="cm">Centimeter (cm)</option>
+                    </select>
+                </div>
+
+                <div class="button-row">
+                    <button id="hitung" class="primary-btn" type="button">Hitung</button>
+                    <button id="reset" class="secondary-btn" type="button">Reset</button>
+                </div>
+            </div>
+
+            <div class="stats">
+                <div class="stat-card">
+                    <span class="label">Panjang</span>
+                    <span class="value"><span id="panjangTampil">10</span><span class="unit-tag" id="satuanPanjang">m</span></span>
+                </div>
+                <div class="stat-card">
+                    <span class="label">Lebar</span>
+                    <span class="value"><span id="lebarTampil">5</span><span class="unit-tag" id="satuanLebar">m</span></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="visual-panel panel">
+            <div class="visual-box">
+                <h2>Visualisasi</h2>
+                <svg viewBox="0 0 360 260" aria-label="Visualisasi bentuk persegi panjang">
+                    <g>
+                        <line class="grid-line" x1="20" y1="220" x2="340" y2="220"></line>
+                        <line class="grid-line" x1="20" y1="180" x2="340" y2="180"></line>
+                        <line class="grid-line" x1="20" y1="140" x2="340" y2="140"></line>
+                        <line class="grid-line" x1="20" y1="100" x2="340" y2="100"></line>
+                        <line class="grid-line" x1="20" y1="60" x2="340" y2="60"></line>
+                        <line class="grid-line" x1="80" y1="30" x2="80" y2="230"></line>
+                        <line class="grid-line" x1="140" y1="30" x2="140" y2="230"></line>
+                        <line class="grid-line" x1="200" y1="30" x2="200" y2="230"></line>
+                        <line class="grid-line" x1="260" y1="30" x2="260" y2="230"></line>
+                        <line class="grid-line" x1="320" y1="30" x2="320" y2="230"></line>
+                    </g>
+
+                    <line class="dimension-line" id="lineWidth1" x1="60" y1="200" x2="300" y2="200"></line>
+                    <line class="dimension-line" id="lineWidth2" x1="60" y1="192" x2="60" y2="208"></line>
+                    <line class="dimension-line" id="lineWidth3" x1="300" y1="192" x2="300" y2="208"></line>
+                    <line class="dimension-line" id="lineHeight1" x1="45" y1="50" x2="45" y2="200"></line>
+                    <line class="dimension-line" id="lineHeight2" x1="38" y1="50" x2="52" y2="50"></line>
+                    <line class="dimension-line" id="lineHeight3" x1="38" y1="200" x2="52" y2="200"></line>
+
+                    <rect id="shapeRect" class="shape" x="75" y="70" width="200" height="100" rx="12"></rect>
+                    <text id="widthLabel" class="dimension-text" x="180" y="235" text-anchor="middle">10 m</text>
+                    <text id="heightLabel" class="dimension-text" x="20" y="137" text-anchor="middle" transform="rotate(-90 20 137)">5 m</text>
+                    <text id="shapeLabel" class="dimension-text" x="180" y="95" text-anchor="middle" fill="#e8f0ff">10 m × 5 m</text>
+                </svg>
+            </div>
+
+            <div class="result-box">
+                <div class="result-row">
+                    <span class="label">Luas</span>
+                    <span class="value"><span id="luas">50</span><span class="unit-tag" id="satuanLuas">m</span><sup>2</sup></span>
+                </div>
+                <div class="result-row">
+                    <span class="label">Keliling</span>
+                    <span class="value"><span id="keliling">30</span><span class="unit-tag" id="satuanKeliling">m</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const panjangInput = document.getElementById("panjang");
+        const lebarInput = document.getElementById("lebar");
+        const satuanSelect = document.getElementById("satuan");
+        const hitungBtn = document.getElementById("hitung");
+        const resetBtn = document.getElementById("reset");
+
+        const shapeRect = document.getElementById("shapeRect");
+        const widthLabel = document.getElementById("widthLabel");
+        const heightLabel = document.getElementById("heightLabel");
+        const shapeLabel = document.getElementById("shapeLabel");
+
+        const lineWidth1 = document.getElementById("lineWidth1");
+        const lineWidth2 = document.getElementById("lineWidth2");
+        const lineWidth3 = document.getElementById("lineWidth3");
+        const lineHeight1 = document.getElementById("lineHeight1");
+        const lineHeight2 = document.getElementById("lineHeight2");
+        const lineHeight3 = document.getElementById("lineHeight3");
+
+        const defaultState = {
+            panjang: 10,
+            lebar: 5,
+            satuan: "m"
+        };
+
+        function formatNumber(value) {
+            if (!isFinite(value)) return "0";
+            return Number(value).toFixed(2).replace(/\.00$/, "").replace(/(\.\d)0$/, "$1");
+        }
+
+        function updateVisualisasi(panjang, lebar) {
+            const maxSide = Math.max(panjang, lebar, 1);
+            const minWidth = 110;
+            const minHeight = 60;
+            const maxWidth = 220;
+            const maxHeight = 120;
+
+            const visualWidth = Math.max(minWidth, Math.min(maxWidth, (panjang / maxSide) * 220));
+            const visualHeight = Math.max(minHeight, Math.min(maxHeight, (lebar / maxSide) * 120));
+
+            const x = (360 - visualWidth) / 2;
+            const y = (260 - visualHeight) / 2;
+
+            shapeRect.setAttribute("x", x);
+            shapeRect.setAttribute("y", y);
+            shapeRect.setAttribute("width", visualWidth);
+            shapeRect.setAttribute("height", visualHeight);
+
+            lineWidth1.setAttribute("x1", x);
+            lineWidth1.setAttribute("x2", x + visualWidth);
+            lineWidth1.setAttribute("y1", 210);
+            lineWidth1.setAttribute("y2", 210);
+
+            lineWidth2.setAttribute("x1", x);
+            lineWidth2.setAttribute("x2", x);
+            lineWidth2.setAttribute("y1", 202);
+            lineWidth2.setAttribute("y2", 218);
+
+            lineWidth3.setAttribute("x1", x + visualWidth);
+            lineWidth3.setAttribute("x2", x + visualWidth);
+            lineWidth3.setAttribute("y1", 202);
+            lineWidth3.setAttribute("y2", 218);
+
+            lineHeight1.setAttribute("x1", 52);
+            lineHeight1.setAttribute("x2", 52);
+            lineHeight1.setAttribute("y1", y);
+            lineHeight1.setAttribute("y2", y + visualHeight);
+
+            lineHeight2.setAttribute("x1", 44);
+            lineHeight2.setAttribute("x2", 60);
+            lineHeight2.setAttribute("y1", y);
+            lineHeight2.setAttribute("y2", y);
+
+            lineHeight3.setAttribute("x1", 44);
+            lineHeight3.setAttribute("x2", 60);
+            lineHeight3.setAttribute("y1", y + visualHeight);
+            lineHeight3.setAttribute("y2", y + visualHeight);
+
+            const satuan = satuanSelect.value;
+            widthLabel.textContent = `${formatNumber(panjang)} ${satuan}`;
+            heightLabel.textContent = `${formatNumber(lebar)} ${satuan}`;
+            shapeLabel.textContent = `${formatNumber(panjang)} ${satuan} × ${formatNumber(lebar)} ${satuan}`;
+        }
+
+        function hitungPersegiPanjang() {
+            const panjang = parseFloat(panjangInput.value) || 0;
+            const lebar = parseFloat(lebarInput.value) || 0;
+            const satuan = satuanSelect.value;
+
+            const luas = panjang * lebar;
+            const keliling = 2 * (panjang + lebar);
+
+            document.getElementById("panjangTampil").textContent = formatNumber(panjang);
+            document.getElementById("lebarTampil").textContent = formatNumber(lebar);
+            document.getElementById("luas").textContent = formatNumber(luas);
+            document.getElementById("keliling").textContent = formatNumber(keliling);
+
+            document.getElementById("satuanPanjang").textContent = satuan;
+            document.getElementById("satuanLebar").textContent = satuan;
+            document.getElementById("satuanLuas").textContent = satuan;
+            document.getElementById("satuanKeliling").textContent = satuan;
+
+            updateVisualisasi(panjang, lebar);
+        }
+
+        function resetForm() {
+            panjangInput.value = defaultState.panjang;
+            lebarInput.value = defaultState.lebar;
+            satuanSelect.value = defaultState.satuan;
+            hitungPersegiPanjang();
+        }
+
+        panjangInput.addEventListener("input", hitungPersegiPanjang);
+        lebarInput.addEventListener("input", hitungPersegiPanjang);
+        satuanSelect.addEventListener("change", hitungPersegiPanjang);
+        hitungBtn.addEventListener("click", hitungPersegiPanjang);
+        resetBtn.addEventListener("click", resetForm);
+
+        hitungPersegiPanjang();
+    </script>
+</body>
+</html>
